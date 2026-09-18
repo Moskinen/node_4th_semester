@@ -4,11 +4,17 @@ const express = require('express')
 // //Instansiering
 const app = express();
 
+app.use(express.json())
+
 // task: Create a route for the endpoint / which returns a greeting
 
 app.get('/', (req, res) => {
-    res.send({ data: "Hello and welcome Moskinen"})
+    res.sendFile(__dirname + '/index.html')
 });
+
+app.get('/xss', (req, res) => {
+    res.sendFile(__dirname + '/xss.html')
+})
 
 //Importering og instansering i en linje
 // const app = require('express')();
@@ -36,6 +42,18 @@ app.get('/bars/forgottenItems', (req, res) => {
     console.log(req.querry);
     res.send({ data: req.querry});
 });
+
+app.post('/dictators', (req, res) => {
+    console.log(req.body)
+    res.send({})
+})
+
+// task create a patch for dictators
+
+app.patch('/dictators/:name', (req, res) => {
+    res.send({ data: `You have turned the great dictator - ${req.params.name} - benevolent for life `})
+})
+
 
 //Lytte på en port
 app.listen(8080);
